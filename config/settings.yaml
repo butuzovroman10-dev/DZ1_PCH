@@ -1,0 +1,34 @@
+# Параметры обработки медицинской диаграммы
+
+image_processing:
+  rotation_tolerance: 0.5          # допуск угла (градусы) для пропуска поворота
+  hough_lines_threshold: 100       # порог для детектора линий Хафа
+  min_line_length: 100             # минимальная длина линии в пикселях
+  max_line_gap: 10                 # макс. разрыв между отрезками линии
+
+graph_extraction:
+  method: "auto"                   # auto, manual
+  manual_boxes:                    # задаётся, если method=manual
+    first_graph: [x1, y1, x2, y2]   # координаты левого верхнего и правого нижнего
+    second_graph: [x1, y1, x2, y2]
+  expected_graphs_count: 2
+  min_graph_area: 1000           # минимальная площадь области графика (пиксели^2)
+
+timeseries:
+  calibration:
+    time_per_pixel: 0.01           # секунд на пиксель по оси X (если нет OCR)
+    amplitude_per_pixel: 0.05      # мВ на пиксель по оси Y (если нет OCR)
+  use_ocr: false                   # пытаться ли извлечь масштаб с помощью OCR
+  interpolation: "linear"          # linear, nearest
+  output_sampling_rate: 100        # точек в секунду (итоговый CSV)
+
+ocr:
+  language: "rus+eng"
+  tesseract_cmd: "tesseract"       # путь к tesseract (если в PATH)
+  expected_time_units: ["с", "sec", "s", "сек"]
+  expected_amplitude_units: ["мВ", "mV", "мкВ", "uV"]
+
+visualization:
+  show_intermediate: false         # показывать промежуточные этапы (отладка)
+  save_aligned: true
+  save_graph_crops: true
